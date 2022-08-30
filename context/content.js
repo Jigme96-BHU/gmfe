@@ -28,9 +28,9 @@ export const ContentProvider = ({ children }) => {
       })
     );
   };
-  const mqttPublish = ({ flow_name, val }) => {
+  const mqttPublish = ({ valve_topic, val }) => {
     if (client) {
-      client.publish(flow_name, String(val));
+      client.publish(valve_topic, String(val));
     }
   };
   useEffect(() => {
