@@ -47,6 +47,11 @@ export default function Header({ children }) {
       label: <Link href="/alarmsEvents">Alarms and Events</Link>,
       icon: <AlertFilled />,
     },
+    {
+      key: 6,
+      label: <Link href="/eventLogs">Events log</Link>,
+      icon: <AlertFilled />,
+    },
   ];
 
   return (

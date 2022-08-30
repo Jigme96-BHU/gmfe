@@ -23,6 +23,7 @@ import { Column } from "@ant-design/plots";
 //   );
 // }
 
+
 export default function FlowRate({ data }) {
   const config = {
     data,

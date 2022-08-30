@@ -31,6 +31,10 @@ export default function HomeDash() {
     },
     {
       valve_name: "Val 3",
+      valve_status: false,
+    },
+    {
+      valve_name: "Val 4",
       valve_status: true,
     },
   ]);
