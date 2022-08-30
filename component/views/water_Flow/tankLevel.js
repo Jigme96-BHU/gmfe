@@ -39,7 +39,7 @@ export default function TankLevel({ data }) {
                         },
                       }}
                     />
-                    <p className="sub_title">{val.flow_name}</p>
+                    <p className="sub_title">{val.level_name}</p>
                   </Col>
                 );
               })}
