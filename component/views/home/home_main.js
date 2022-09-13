@@ -11,10 +11,11 @@ export default function HomeDash() {
   const { mqttClient } = useAppContent();
   const [TankData, setTankData] = useState([
     {
-      flow_name: "FM1",
-      flow_rate: 0,
-      total_flow: 0,
-      voltage: 0,
+      level_name: "level1",
+      level: 0,
+    },
+    {
+      level_name: "level2",
       level: 0,
     },
   ]);
@@ -27,11 +28,47 @@ export default function HomeDash() {
     },
     {
       valve_name: "Val 2",
+      valve_status: true,
+    },
+    {
+      valve_name: "Val 3",
+      valve_status: false,
+    },
+    {
+      valve_name: "Val 1",
+      valve_status: true,
+    },
+    {
+      valve_name: "Val 2",
       valve_status: false,
     },
     {
       valve_name: "Val 3",
       valve_status: true,
+    },
+    {
+      valve_name: "Val 1",
+      valve_status: false,
+    },
+    {
+      valve_name: "Val 2",
+      valve_status: true,
+    },
+    {
+      valve_name: "Val 3",
+      valve_status: true,
+    },
+    {
+      valve_name: "Val 1",
+      valve_status: true,
+    },
+    {
+      valve_name: "Val 2",
+      valve_status: false,
+    },
+    {
+      valve_name: "Val 3",
+      valve_status: false,
     },
   ]);
 
@@ -67,19 +104,19 @@ export default function HomeDash() {
     <div>
       <Row gutter={[8, 8]}>
         <Col span={8}>
-          <Card style={{ borderRadius: 15, height: 250 }}>
+          <Card style={{ borderRadius: 15, height: 260 }}>
             <p className="title">Tank Water Level</p>
             <Tank data={TankData} />
           </Card>
         </Col>
         <Col span={16}>
-          <Card style={{ borderRadius: 15, height: 250 }}>
+          <Card style={{ borderRadius: 15, height: 260, overflow: "auto" }}>
             <p className="title">Flow Rate Display</p>
             <FlowRate data={FlowRateData} />
           </Card>
         </Col>
         <Col span={13}>
-          <Card style={{ borderRadius: 15, height: 250 }}>
+          <Card style={{ borderRadius: 15, height: 250, overflow: "auto" }}>
             <p className="title">Valve Status</p>
             <ValveStatus data={ValveStatusData} />
           </Card>

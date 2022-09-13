@@ -29,7 +29,7 @@ export default function Header({ children }) {
     },
     {
       key: 2,
-      label: <Link href="/">SCADA Display</Link>,
+      label: <Link href="/scadaDisplay">SCADA Display</Link>,
       icon: <ApartmentOutlined />,
     },
     {

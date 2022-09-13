@@ -6,7 +6,7 @@ import { useAppContent } from "../../../context/content";
 export default function ValveGuage({ currentValve }) {
   const { mqttPublish } = useAppContent();
 
-  const [ValveValue, setValveValue] = useState(0);
+  let [ValveValue, setValveValue] = useState(0);
 
   useEffect(() => {
     setValveValue(currentValve.valve_percent);
@@ -15,49 +15,59 @@ export default function ValveGuage({ currentValve }) {
   const postServer = async ({ val }) => {
     try {
       let { node_name, valve_name } = currentValve;
-      let url = "http://localhost:5000/data/postValve";
+      let url = "http://localhost:3000/api/valve/valvePost";
+      let date = new Date();
+      date = date.toISOString();
       let body = {
         node_name,
         valve_name,
-        valve_percent: val * 100,
+        valve_percent: val,
         valve_status: val == 0 ? "OFF" : "ON",
+        date,
       };
-      // let response = await fetch(url, {
-      //   method: "POST",
-      //   headers: { "Content-Type": "application/json" },
-      //   body: JSON.stringify(body),
-      // });
-      console.log(body);
+      let response = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+      response = await response.json();
+      if (response.status) {
+        console.log(response.data);
+      }
     } catch (error) {
       console.log(error.message);
     }
   };
 
   const handleIncrement = () => {
-    if (ValveValue < 1) {
-      setValveValue(ValveValue + 0.25);
+    if (ValveValue < 100) {
+      if (ValveValue + 25 > 100) {
+        setValveValue(100);
+      } else {
+        setValveValue(ValveValue + 25);
+      }
       mqttPublish({
         valve_topic: currentValve.valve_topic,
-        val: ValveValue + 0.25,
+        val: ValveValue + 25,
       });
     }
-    postServer({ val: ValveValue + 0.25 });
+    postServer({ val: ValveValue + 25 });
   };
 
   const handleDecrement = () => {
     if (ValveValue > 0) {
-      setValveValue(ValveValue - 0.25);
+      setValveValue(ValveValue - 25);
       mqttPublish({
         valve_topic: currentValve.valve_topic,
-        val: ValveValue - 0.25,
+        val: ValveValue - 25,
       });
-      postServer({ val: ValveValue - 0.25 });
+      postServer({ val: ValveValue - 25 });
     }
   };
 
   //guage config
   const config = {
-    percent: ValveValue,
+    percent: ValveValue / 100,
     range: {
       color: "l(0) 0:#B8E1FF 1:#3D76DD",
     },
@@ -71,7 +81,7 @@ export default function ValveGuage({ currentValve }) {
           fontSize: "36px",
           color: "white",
         },
-        formatter: () => `${ValveValue * 100}%`,
+        formatter: () => `${ValveValue}%`,
       },
       content: {
         style: {
