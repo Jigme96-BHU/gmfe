@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@ant-design/flowchart": "^1.2.1",
     "@ant-design/icons": "^4.7.0",
     "@ant-design/plots": "^1.2.1",
     "antd": "^4.22.6",
@@ -18,7 +19,11 @@
     "next": "12.2.5",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+<<<<<<< HEAD
     "socket.io-client": "^4.5.1"
+=======
+    "react-flow-renderer": "^10.3.16"
+>>>>>>> 3ccf1d95812411af7d81cee36b5cee3047d850d7
   },
   "devDependencies": {
     "eslint": "8.22.0",
