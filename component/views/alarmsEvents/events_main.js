@@ -2,7 +2,6 @@ import { Col, Row } from "antd";
 import { useAppContent } from "../../../context/content";
 import Valve from "./valve";
 import Water_loss from "./water_loss";
-import Water_Quality from "./water_quality";
 
 export default function AlarmsEventsDash() {
   const { mqttClient } = useAppContent();
@@ -16,9 +15,6 @@ export default function AlarmsEventsDash() {
           <Row gutter={[8, 8]}>
             <Col span={24}>
               <Water_loss data={[]} />
-            </Col>
-            <Col span={24}>
-              <Water_Quality data={{}} />
             </Col>
           </Row>
         </Col>

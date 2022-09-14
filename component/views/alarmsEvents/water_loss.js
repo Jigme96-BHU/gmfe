@@ -5,10 +5,14 @@ let socket;
 
 export default function Water_loss() {
 
-  const [input, setInput] = useState('')
-  const [rbp, setrbp] = useState('')
-  const [bhu, setbhu] = useState('')
-  const [school, setschool] = useState('')
+  const [input, setInput] = useState('No Data')
+  const [rbp, setRbp] = useState('No Data')
+  const [bhu, setBhu] = useState('No Data')
+  const [school, setSchool] = useState('No Data')
+  const [terrace, setTerrace] = useState('No Data')
+  const [kst, setKst] = useState('No Data')
+  const [maintown, setMainTown] = useState('No Data')
+  const [chabjey, setChabjey] = useState('No Data')
 
   useEffect(() => {SocketInitializer(),[]})
 
@@ -22,11 +26,19 @@ export default function Water_loss() {
       const small_town = userobj.small_town;
       setInput(small_town);
       const rbp = userobj.RBP;
-      setrbp(rbp);
+      setRbp(rbp);
       const bhu = userobj.BHU;
-      setbhu(bhu);
+      setBhu(bhu);
       const school = userobj.School;
-      setschool(school);
+      setSchool(school);
+      const terrace = userobj.Terrace;
+      setTerrace(terrace);
+      const chabjey = userobj.Chabjey;
+      setChabjey(chabjey)
+      const main_town = userobj.Main_Town;
+      setMainTown(main_town);
+      const kst = userobj.KST;
+      setKst(kst);
     })
   }
 
@@ -45,15 +57,39 @@ export default function Water_loss() {
       status: true,
     },
     {
-      key: 2,
+      key: 3,
       name: "BHU",
       flow_rate_diff: bhu,
       status: true,
     },
     {
-      key: 2,
+      key: 4,
       name: "School",
       flow_rate_diff: school,
+      status: true,
+    },
+    {
+      key: 5,
+      name: "KST",
+      flow_rate_diff: kst,
+      status: true,
+    },
+    {
+      key: 6,
+      name: "Terrace",
+      flow_rate_diff: terrace,
+      status: true,
+    },
+    {
+      key: 7,
+      name: "Main Town",
+      flow_rate_diff: maintown,
+      status: true,
+    },
+    {
+      key: 8,
+      name: "Chabjey",
+      flow_rate_diff: chabjey,
       status: true,
     },
   ];
@@ -75,7 +111,7 @@ export default function Water_loss() {
       dataIndex: "status",
       render: (_, record) => (
         <>
-          {record.status ? (
+          {record.flow_rate_diff > 0 ? (
             <div className="on">Operational</div>
           ) : (
             <div className="off">Defunct</div>
@@ -93,7 +129,7 @@ export default function Water_loss() {
       }}
     >
       <p className="title">Water Loss</p>
-      <Table bordered dataSource={Data} columns={column} />
+      <Table bordered dataSource={Data} pagination={{pageSize:5}} columns={column} />
     </Card>
   );
 }
