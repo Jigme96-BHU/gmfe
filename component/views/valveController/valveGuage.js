@@ -41,27 +41,32 @@ export default function ValveGuage({ currentValve }) {
 
   const handleIncrement = () => {
     if (ValveValue < 100) {
-      if (ValveValue + 25 > 100) {
+      let newVal = ValveValue + 25;
+
+      if (newVal > 100) {
         setValveValue(100);
       } else {
-        setValveValue(ValveValue + 25);
+        setValveValue(newVal);
       }
       mqttPublish({
-        valve_topic: currentValve.valve_topic,
-        val: ValveValue + 25,
+        topic: currentValve.node_name,
+        val: currentValve.valve_name + String(newVal),
       });
+
+      postServer({ val: newVal });
     }
-    postServer({ val: ValveValue + 25 });
   };
 
   const handleDecrement = () => {
     if (ValveValue > 0) {
-      setValveValue(ValveValue - 25);
+      let newVal = ValveValue - 25;
+
+      setValveValue(newVal);
       mqttPublish({
-        valve_topic: currentValve.valve_topic,
-        val: ValveValue - 25,
+        topic: currentValve.node_name,
+        val: currentValve.valve_name + String(newVal),
       });
-      postServer({ val: ValveValue - 25 });
+      postServer({ val: newVal });
     }
   };
 

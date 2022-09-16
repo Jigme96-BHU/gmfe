@@ -1,11 +1,26 @@
 import React from "react";
-import { Card, Col, Row, Select } from "antd";
+import { Card, Cascader, Col, Row, Select } from "antd";
 
 export default function ValveOptions({
   valveList,
   setCurrentValve,
   currentValve,
 }) {
+  const getCurrentData = async (node, valve) => {
+    let body = {
+      node_name: node,
+      valve_name: valve,
+    };
+    let response = await fetch("http://localhost:5000/valve/getSpecific", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
+    });
+    response = await response.json();
+
+    // setCurrentValve(response.data);
+  };
+
   return (
     <Card
       style={{
@@ -21,21 +36,19 @@ export default function ValveOptions({
           minHeight: 300,
         }}
       >
-        <Select
+        <Cascader
           style={{ width: 150 }}
+          options={valveList}
           onChange={(v) => {
-            setCurrentValve(valveList[v]);
+            setCurrentValve({
+              node_name: v[0],
+              valve_name: v[1],
+              valve_percent: currentValve.valve_percent,
+            });
+            getCurrentData(v[0], v[1]);
           }}
-          placeholder="Select Valve"
-        >
-          {valveList.map((val, i) => {
-            return (
-              <Select.Option value={val.key} key={i}>
-                {val.valve_name}
-              </Select.Option>
-            );
-          })}
-        </Select>
+          allowClear={false}
+        />
         <br />
         <br />
         <br />
@@ -46,6 +59,12 @@ export default function ValveOptions({
           </Col>
           <Col span={12}>
             <b>{currentValve.node_name}</b>
+          </Col>
+          <Col span={12}>
+            <p className="sub_title">Valve :</p>
+          </Col>
+          <Col span={12}>
+            <b>{currentValve.valve_name}</b>
           </Col>
           <Col span={12}>
             <p className="sub_title">Status :</p>

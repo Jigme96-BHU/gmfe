@@ -28,9 +28,9 @@ export const ContentProvider = ({ children }) => {
       })
     );
   };
-  const mqttPublish = ({ valve_topic, val }) => {
+  const mqttPublish = ({ topic, val }) => {
     if (client) {
-      client.publish(valve_topic, String(val));
+      client.publish(topic, String(val));
     }
   };
   useEffect(() => {

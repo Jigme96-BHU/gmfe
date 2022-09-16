@@ -9,7 +9,13 @@ export default function WaterFlowDash() {
   const { mqttClient } = useAppContent();
   const [TankData, setTankData] = useState([
     {
-      flow_name: "FM1",
+      level_name: "level1",
+      flow_rate: 0,
+      total_flow: 0,
+      voltage: 0,
+      level: 0,
+    },{
+      level_name: "level2",
       flow_rate: 0,
       total_flow: 0,
       voltage: 0,
