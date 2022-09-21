@@ -3,6 +3,10 @@ import { Button, Card, Col, Row } from "antd";
 import { DownOutlined, UpOutlined } from "@ant-design/icons";
 import { Gauge } from "@ant-design/plots";
 import { useAppContent } from "../../../context/content";
+
+
+const SERVER = process.env.NEXT_PUBLIC_SERVER;
+
 export default function ValveGuage({ currentValve }) {
   const { mqttPublish } = useAppContent();
 
@@ -15,7 +19,7 @@ export default function ValveGuage({ currentValve }) {
   const postServer = async ({ val }) => {
     try {
       let { node_name, valve_name } = currentValve;
-      let url = "http://localhost:3000/api/valve/valvePost";
+      let url = SERVER + '/data/valvedata'; //update API
       let date = new Date();
       date = date.toISOString();
       let body = {
@@ -50,8 +54,10 @@ export default function ValveGuage({ currentValve }) {
         valve_topic: currentValve.valve_topic,
         val: ValveValue + 25,
       });
+      
+      postServer({ val: ValveValue + 25 });
     }
-    postServer({ val: ValveValue + 25 });
+    
   };
 
   const handleDecrement = () => {

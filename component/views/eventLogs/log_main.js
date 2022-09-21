@@ -35,11 +35,17 @@ const chartDemo = () =>{
   const [sensor, setSensors] = useState(eachSensorData[sensorData[0]]);
   const [secondSensor, setSecondSensor] = useState(eachSensorData[sensorData[0]][0]);
   const [sensorType, setSensorType] =  useState('FlowMeter');
+  const [yField, setYField] = useState('flow_rate');
 
   const handleSensorChange = (value)=>{
     setSensors(eachSensorData[value]);
     setSecondSensor(eachSensorData[value][0]);
     setSensorType(value);
+    if(value === 'LevelSensor'){
+      setYField('level');
+    }else{
+      setYField('flow_rate');
+    }
   };
 
   const OnSecondSensorChange = (value)=>{
@@ -52,19 +58,9 @@ const chartDemo = () =>{
     height:400,
     autoFit: false,
     xField: 'createdAt',
-    yField: 'flow_rate',
+    yField: yField,
 
   }
-
-  const config1 ={
-    data,
-    xField: 'createdAt',
-    yField: 'level',
-    seriesField: 'level_name',
-    legend:{
-      position: 'top-left',
-    } ,
-  };
 
   async function getDate(data,dataSting){
     return setDate(dataSting);
