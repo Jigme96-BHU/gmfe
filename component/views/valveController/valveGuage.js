@@ -56,10 +56,9 @@ export default function ValveGuage({ currentValve }) {
         topic: currentValve.node_name,
         val: currentValve.valve_name + String(newVal),
       });
-      
-      postServer({ val: ValveValue + 25 });
+
+      postServer({ val: newVal });
     }
-    
   };
 
   const handleDecrement = () => {
