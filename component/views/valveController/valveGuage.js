@@ -4,7 +4,6 @@ import { DownOutlined, UpOutlined } from "@ant-design/icons";
 import { Gauge } from "@ant-design/plots";
 import { useAppContent } from "../../../context/content";
 
-
 const SERVER = process.env.NEXT_PUBLIC_SERVER;
 
 export default function ValveGuage({ currentValve }) {
@@ -19,7 +18,7 @@ export default function ValveGuage({ currentValve }) {
   const postServer = async ({ val }) => {
     try {
       let { node_name, valve_name } = currentValve;
-      let url = SERVER + '/data/valvedata'; //update API
+      let url = SERVER + "/data/valvedata"; //update API
       let date = new Date();
       date = date.toISOString();
       let body = {
@@ -46,39 +45,27 @@ export default function ValveGuage({ currentValve }) {
   const handleIncrement = () => {
     if (ValveValue < 100) {
       let newVal = ValveValue + 25;
-
       if (newVal > 100) {
         setValveValue(100);
       } else {
         setValveValue(newVal);
       }
-      mqttPublish({
-        topic: currentValve.node_name,
-        val: currentValve.valve_name + String(newVal),
-      });
-<<<<<<< HEAD
-      
-      postServer({ val: ValveValue + 25 });
     }
-    
-=======
-
-      postServer({ val: newVal });
-    }
->>>>>>> 9b0df8c67784dc123598a29378502143f5dc9d55
   };
 
   const handleDecrement = () => {
     if (ValveValue > 0) {
       let newVal = ValveValue - 25;
-
       setValveValue(newVal);
-      mqttPublish({
-        topic: currentValve.node_name,
-        val: currentValve.valve_name + String(newVal),
-      });
-      postServer({ val: newVal });
     }
+  };
+
+  const handleValve = () => {
+    mqttPublish({
+      topic: currentValve.node_name,
+      val: currentValve.valve_name + String(ValveValue),
+    });
+    postServer({ val: ValveValue });
   };
 
   //guage config
@@ -129,9 +116,11 @@ export default function ValveGuage({ currentValve }) {
           minHeight: 410,
         }}
       >
-        <Row justify="space-evenly">
+        <Row justify="space-evenly" gutter={[16, 16]}>
           <Col span={24}>
             <Gauge {...config} height={200} width={300} />
+          </Col>
+          <Col span={24}>
             <Row justify="space-evenly">
               <Col>
                 <Button
@@ -143,6 +132,18 @@ export default function ValveGuage({ currentValve }) {
                   onClick={handleDecrement}
                   icon={<DownOutlined />}
                 />
+              </Col>
+              <Col>
+                <Button
+                  style={{
+                    width: 100,
+                    background: "#59d681",
+                    border: "none",
+                  }}
+                  onClick={handleValve}
+                >
+                  Turn Valve
+                </Button>
               </Col>
               <Col>
                 <Button
