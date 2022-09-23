@@ -1,6 +1,8 @@
 import React from "react";
 import { Card, Cascader, Col, Row, Select } from "antd";
 
+const SERVER = process.env.NEXT_PUBLIC_SERVER
+
 export default function ValveOptions({
   valveList,
   setCurrentValve,
@@ -11,14 +13,14 @@ export default function ValveOptions({
       node_name: node,
       valve_name: valve,
     };
-    let response = await fetch("http://localhost:5000/valve/getSpecific", {
+    let response = await fetch( SERVER + '/data/specific', {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
     });
     response = await response.json();
 
-    // setCurrentValve(response.data);
+    setCurrentValve(response.data);
   };
 
   return (

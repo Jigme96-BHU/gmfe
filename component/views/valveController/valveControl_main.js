@@ -3,14 +3,15 @@ import { useEffect, useState } from "react";
 import ValveGuage from "./valveGuage";
 import ValveOptions from "./valveOptions";
 
-const HOST = process.env.NEXT_PUBLIC_HOST;
+// const HOST = process.env.NEXT_PUBLIC_HOST;
+const SERVER = process.env.NEXT_PUBLIC_SERVER
 export default function ValveControlDash() {
   const [valveList, setValveList] = useState([]);
 
   useEffect(() => {
     const getValveList = async () => {
       try {
-        let response = await fetch(HOST + "/api/valve/valveList");
+        let response = await fetch(SERVER + "/data/valvelist");
         response = await response.json();
         if (response.status) {
           let valveList = response.data;
