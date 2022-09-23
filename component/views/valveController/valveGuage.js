@@ -6,29 +6,10 @@ import { useAppContent } from "../../../context/content";
 
 const SERVER = process.env.NEXT_PUBLIC_SERVER;
 
-export default function ValveGuage({
-  currentValve,
-  setCurrentValve,
-  node,
-  valve,
-}) {
+export default function ValveGuage({ currentValve }) {
   const { mqttPublish } = useAppContent();
 
   let [ValveValue, setValveValue] = useState(0);
-
-  const getCurrentData = async () => {
-    let body = {
-      node_name: node,
-      valve_name: valve,
-    };
-    let response = await fetch(SERVER + "/data/specific", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(body),
-    });
-    response = await response.json();
-    setCurrentValve(response.data);
-  };
 
   useEffect(() => {
     setValveValue(currentValve.valve_percent);
@@ -85,7 +66,6 @@ export default function ValveGuage({
       val: currentValve.valve_name + String(ValveValue),
     });
     postServer({ val: ValveValue });
-    getCurrentData();
   };
 
   //guage config
@@ -183,3 +163,4 @@ export default function ValveGuage({
     </>
   );
 }
+
