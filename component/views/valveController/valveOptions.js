@@ -1,19 +1,23 @@
 import React from "react";
 import { Card, Cascader, Col, Row, Select } from "antd";
 
-const SERVER = process.env.NEXT_PUBLIC_SERVER
+const SERVER = process.env.NEXT_PUBLIC_SERVER;
 
 export default function ValveOptions({
   valveList,
   setCurrentValve,
   currentValve,
+  node,
+  valve,
+  setNode,
+  setValve,
 }) {
-  const getCurrentData = async (node, valve) => {
+  const getCurrentData = async () => {
     let body = {
       node_name: node,
       valve_name: valve,
     };
-    let response = await fetch( SERVER + '/data/specific', {
+    let response = await fetch(SERVER + "/data/specific", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
@@ -47,7 +51,9 @@ export default function ValveOptions({
               valve_name: v[1],
               valve_percent: currentValve.valve_percent,
             });
-            getCurrentData(v[0], v[1]);
+            setNode(v[0]);
+            setValve(v[1]);
+            getCurrentData();
           }}
           allowClear={false}
         />
