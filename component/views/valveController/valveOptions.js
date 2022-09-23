@@ -7,8 +7,6 @@ export default function ValveOptions({
   valveList,
   setCurrentValve,
   currentValve,
-  node,
-  valve,
   setNode,
   setValve,
 }) {
@@ -16,8 +14,8 @@ export default function ValveOptions({
     setNode(a);
     setValve(b);
     let body = {
-      node_name: node,
-      valve_name: valve,
+      node_name: a,
+      valve_name: b,
     };
     let response = await fetch(SERVER + "/data/specific", {
       method: "POST",
