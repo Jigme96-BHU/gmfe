@@ -9,18 +9,16 @@ const SERVER = process.env.NEXT_PUBLIC_SERVER;
 export default function ValveGuage({
   currentValve,
   setCurrentValve,
-  node,
-  valve,
+  config
 }) {
   const { mqttPublish } = useAppContent();
 
   let [ValveValue, setValveValue] = useState(0);
 
   const getCurrentData = async () => {
-    console.log(node,valve);
     let body = {
-      node_name: node,
-      valve_name: valve,
+      node_name: config.node,
+      valve_name: config.valve,
     };
     let response = await fetch(SERVER + "/data/specific", {
       method: "POST",

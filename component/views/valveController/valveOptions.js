@@ -7,12 +7,13 @@ export default function ValveOptions({
   valveList,
   setCurrentValve,
   currentValve,
-  setNode,
-  setValve,
+  setConfig,
 }) {
   const getCurrentData = async (a, b) => {
-    setNode(a);
-    setValve(b);
+    setConfig({
+      node: a,
+      valve: b,
+    });
     let body = {
       node_name: a,
       valve_name: b,
