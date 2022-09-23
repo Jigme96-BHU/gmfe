@@ -7,8 +7,10 @@ import ValveOptions from "./valveOptions";
 const SERVER = process.env.NEXT_PUBLIC_SERVER;
 export default function ValveControlDash() {
   const [valveList, setValveList] = useState([]);
-  const [node, setNode] = useState("");
-  const [valve, setValve] = useState("");
+  const [config, setConfig] = useState({
+    node: "",
+    valve: "",
+  });
 
   useEffect(() => {
     const getValveList = async () => {
@@ -77,18 +79,14 @@ export default function ValveControlDash() {
             currentValve={currentValve}
             setCurrentValve={setCurrentValve}
             valveList={valveList}
-            node={node}
-            valve={valve}
-            setNode={setNode}
-            setValve={setValve}
+            setConfig={setConfig}
           />
         </Col>
         <Col span={16}>
           <ValveGuage
             currentValve={currentValve}
             setCurrentValve={setCurrentValve}
-            node={node}
-            value={valve}
+            config={config}
           />
         </Col>
       </Row>

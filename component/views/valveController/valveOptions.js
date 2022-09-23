@@ -7,17 +7,16 @@ export default function ValveOptions({
   valveList,
   setCurrentValve,
   currentValve,
-  node,
-  valve,
-  setNode,
-  setValve,
+  setConfig,
 }) {
   const getCurrentData = async (a, b) => {
-    setNode(a);
-    setValve(b);
+    setConfig({
+      node: a,
+      valve: b,
+    });
     let body = {
-      node_name: node,
-      valve_name: valve,
+      node_name: a,
+      valve_name: b,
     };
     let response = await fetch(SERVER + "/data/specific", {
       method: "POST",
