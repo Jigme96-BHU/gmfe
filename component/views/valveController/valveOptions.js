@@ -12,7 +12,9 @@ export default function ValveOptions({
   setNode,
   setValve,
 }) {
-  const getCurrentData = async () => {
+  const getCurrentData = async (a, b) => {
+    setNode(a);
+    setValve(b);
     let body = {
       node_name: node,
       valve_name: valve,
@@ -51,9 +53,7 @@ export default function ValveOptions({
               valve_name: v[1],
               valve_percent: currentValve.valve_percent,
             });
-            setNode(v[0]);
-            setValve(v[1]);
-            getCurrentData();
+            getCurrentData(v[0], v[1]);
           }}
           allowClear={false}
         />
