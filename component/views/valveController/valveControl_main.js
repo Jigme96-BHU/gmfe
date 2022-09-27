@@ -7,7 +7,7 @@ import ValveOptions from "./valveOptions";
 const SERVER = process.env.NEXT_PUBLIC_SERVER;
 export default function ValveControlDash() {
   const [valveList, setValveList] = useState([]);
-  const [config, setConfig] = useState({
+  let [config, setConfig] = useState({
     node: "",
     valve: "",
   });
@@ -86,7 +86,7 @@ export default function ValveControlDash() {
           <ValveGuage
             currentValve={currentValve}
             setCurrentValve={setCurrentValve}
-            config={config}
+            node={config}
           />
         </Col>
       </Row>

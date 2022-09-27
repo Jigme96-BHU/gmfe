@@ -9,7 +9,7 @@ const SERVER = process.env.NEXT_PUBLIC_SERVER;
 export default function ValveGuage({
   currentValve,
   setCurrentValve,
-  config
+  node
 }) {
   const { mqttPublish } = useAppContent();
 
@@ -17,8 +17,8 @@ export default function ValveGuage({
 
   const getCurrentData = async () => {
     let body = {
-      node_name: config.node,
-      valve_name: config.valve,
+      node_name: node.node,
+      valve_name: node.valve,
     };
     let response = await fetch(SERVER + "/data/specific", {
       method: "POST",
@@ -62,7 +62,7 @@ export default function ValveGuage({
 
   const handleIncrement = () => {
     if (ValveValue < 100) {
-      let newVal = ValveValue + 25;
+      let newVal = Number(ValveValue) + 25;
       if (newVal > 100) {
         setValveValue(100);
       } else {

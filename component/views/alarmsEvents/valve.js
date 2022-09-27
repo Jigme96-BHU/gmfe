@@ -1,29 +1,52 @@
 import { Card, Table } from "antd";
+import { useEffect, useState } from "react";
+import moment from "moment";
 
-export default function Valve({ data }) {
-  const Data = [
-    {
-      key: 1,
-      name: "ATP",
-      status: true,
-      time_operation: "10-10-2022",
-      operation: false,
-      time_error: "11-10-2022",
-    },
-  ];
+const SERVER = process.env.NEXT_PUBLIC_SERVER;
+
+export default function Valve() {
+
+  const [tabelData,setTableData] = useState([]);
+
+  useEffect(()=>{
+    const valveData = async()=>{
+      try {
+        let response = await fetch(SERVER + "/data/valvelist");
+        response = await response.json();
+        if(response.status){
+          let valList = response.data;
+
+          for(let i=0;i<valList.length; i++){
+            valList[i].key = i;
+            
+          }
+          console.log(valList);
+          setTableData(valList);
+        }
+      } catch (error) {
+        console.log(error);  
+      }
+    };
+    valveData();
+  },[])
 
   const column = [
     {
-      title: "Name",
-      dataIndex: "name",
-      key: "name",
+      title: "Node Name",
+      dataIndex: "node_name",
+      key: "node_name"
+    },
+    {
+      title: "Valve Name",
+      dataIndex: "valve_name",
+      key: "valve_name",
     },
     {
       title: "Status",
-      dataIndex: "status",
+      dataIndex: "valve_status",
       render: (_, record) => (
         <>
-          {record.status ? (
+          {record.valve_status == "ON" ? (
             <div className="on">
               <span>ON</span>
             </div>
@@ -37,33 +60,15 @@ export default function Valve({ data }) {
     },
     {
       title: "Time ON/OFF",
-      dataIndex: "time_operation",
-      key: "time_operation",
-    },
-    {
-      title: "Operation",
-      dataIndex: "operation",
-      render: (_, record) => (
-        <>
-          {record.operation ? (
-            <div className="on">
-              <span>Operational</span>
-            </div>
-          ) : (
-            <div className="off">
-              <span>Defunct</span>
-            </div>
-          )}
-        </>
-      ),
-    },
-    {
-      title: "Time(of Error)",
-      dataIndex: "time_error",
-      key: "time_error",
+      dataIndex: "updatedAt",
+      key: "updatedAt",
+      render:(_,record)=>{
+        return <span> {moment(record.updatedAt).format("YYYY/MM/DD HH:MM:S")} </span> ;
+    }
+
     },
   ];
-  return (
+  return ( 
     <Card
       style={{
         borderRadius: 16,
@@ -72,7 +77,7 @@ export default function Valve({ data }) {
       }}
     >
       <p className="title">Valve</p>
-      <Table bordered dataSource={Data} columns={column} />
+      <Table bordered dataSource={tabelData} pagination={{pageSize:6}} columns={column} />
     </Card>
   );
 }
