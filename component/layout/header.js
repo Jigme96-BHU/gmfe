@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Card, Col, Layout, Menu, Row } from "antd";
 import {
   AlertFilled,
@@ -6,6 +6,8 @@ import {
   DashboardOutlined,
   ExperimentOutlined,
   HomeFilled,
+  LoginOutlined,
+  UserAddOutlined,
 } from "@ant-design/icons";
 import Image from "next/image";
 import Link from "next/link";
@@ -51,6 +53,16 @@ export default function Header({ children }) {
       key: 6,
       label: <Link href="/eventLogs">Events log</Link>,
       icon: <AlertFilled />,
+    },
+    {
+      key: 7,
+      label: <Link href="/auth/login">Login</Link>,
+      icon: <LoginOutlined />,
+    },
+    {
+      key: 8,
+      label: <Link href="/auth/signup">SignUp</Link>,
+      icon: <UserAddOutlined />,
     },
   ];
 
