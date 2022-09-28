@@ -59,7 +59,7 @@ export default function Valve() {
       ),
     },
     {
-      title: "Time ON/OFF",
+      title: "Date and Time ON/OFF",
       dataIndex: "updatedAt",
       key: "updatedAt",
       render:(_,record)=>{
