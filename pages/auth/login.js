@@ -30,7 +30,8 @@ export default function Login() {
         minHeight: "70vh",
       }}
     >
-      <Card>
+      <Card style={{borderRadius: 20}}>
+
         <div>
           <center>
             <p style={{ fontSize: 25, fontFamily: "cursive" }}>Login</p>

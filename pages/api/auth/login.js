@@ -5,29 +5,21 @@ const server = process.env.NEXT_PUBLIC_SERVER; // server hostname
 const secret = process.env.JWTSECRET; // secret key for authentication
 const cookie_name = process.env.COOKIE_NAME; // cookie name eg jwt
 
+
 export default async function AuthLogin(req, res) {
   const { email, password } = req.body;
-  
-  /*
+ 
+  let url = server + '/data/login';
 
-    Validate user from backend
-    // Check in the database
-    let url = server + "/auth/login";
-  
-    let response = await fetch( url,{
-        method:"POST",
-        headers:{"Content-Type":"application/json"},
-        body: JSON.stringify({email,password})
-    });
-    
-    return type {
-        status: true/false,
-        message: ""//success/ error
-        data: {user...} //user details
-    }
-    
-    */
-  // check if user is authenticated
+  let response = await fetch(url,{
+    method:'POST',
+    headers:{"Content-Type":"application/json"},
+    body: JSON.stringify({email,password})
+  })
+
+  response = await response.json(); 
+
+ // check if user is authenticated
   if (response.status) {
     // create jwt token
     const token = sign(
@@ -52,3 +44,5 @@ export default async function AuthLogin(req, res) {
   }
   res.json(response);
 }
+
+

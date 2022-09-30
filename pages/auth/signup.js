@@ -11,7 +11,7 @@ export default function SignUp() {
       message.error("Incorrect Confirm Password");
     } else {
       try {
-        let url = server + "/api/auth/signup";
+        let url = server + "/data/register";
         let response = await fetch(url, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
