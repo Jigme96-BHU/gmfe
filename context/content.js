@@ -11,6 +11,7 @@ export function useAppContent() {
 const HOST = process.env.NEXT_PUBLIC_MQTT_HOST;
 const PORT = process.env.NEXT_PUBLIC_MQTT_PORT;
 const TOPIC = process.env.NEXT_PUBLIC_MQTT_TOPIC;
+const REPLYTOPIC = process.env.NEXT_PUBLIC_MQTT_TOPIC_REPLY;
 
 export const ContentProvider = ({ children }) => {
   const [user, setUser] = useState({});
@@ -39,6 +40,7 @@ export const ContentProvider = ({ children }) => {
         message.success("Mqtt Connected");
 
         client.subscribe(TOPIC); //subscribe to topic after connection success
+        client.subscribe(REPLYTOPIC);
       });
       client.on("error", (err) => {
         console.error("Connection error: ", err);

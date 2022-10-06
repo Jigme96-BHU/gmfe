@@ -30,7 +30,7 @@ export default function Login() {
         minHeight: "70vh",
       }}
     >
-      <Card style={{borderRadius: 20}}>
+      <Card >
 
         <div>
           <center>
@@ -53,7 +53,7 @@ export default function Login() {
             <Input.Password />
           </Form.Item>
           <Form.Item>
-            <Button htmlType="submit">Submit</Button>
+            <Button   htmlType="submit">Submit</Button>
           </Form.Item>
         </Form>
       </Card>

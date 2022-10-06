@@ -7,6 +7,8 @@ import Tank from "./Tank";
 import ValveStatus from "./ValveStatus";
 import WaterQuality from "./WaterQuality";
 
+const Topic = process.env.NEXT_PUBLIC_MQTT_TOPIC; 
+
 export default function HomeDash() {
   const { mqttClient } = useAppContent();
   const [TankData, setTankData] = useState([
@@ -21,66 +23,26 @@ export default function HomeDash() {
   ]);
   const [FlowRateData, setFlowRateData] = useState([]);
 
-  const [ValveStatusData, setValveStatusData] = useState([
-    {
-      valve_name: "Val 1",
-      valve_status: true,
-    },
-    {
-      valve_name: "Val 2",
-      valve_status: true,
-    },
-    {
-      valve_name: "Val 3",
-      valve_status: false,
-    },
-    {
-      valve_name: "Val 1",
-      valve_status: true,
-    },
-    {
-      valve_name: "Val 2",
-      valve_status: false,
-    },
-    {
-      valve_name: "Val 3",
-      valve_status: true,
-    },
-    {
-      valve_name: "Val 1",
-      valve_status: false,
-    },
-    {
-      valve_name: "Val 2",
-      valve_status: true,
-    },
-    {
-      valve_name: "Val 3",
-      valve_status: false,
-    },
-    {
-      valve_name: "Val 4",
-      valve_status: true,
-    },
-    {
-      valve_name: "Val 1",
-      valve_status: true,
-    },
-    {
-      valve_name: "Val 2",
-      valve_status: false,
-    },
-    {
-      valve_name: "Val 3",
-      valve_status: false,
-    },
-  ]);
+  const [ValveStatusData, setValveStatusData] = useState([]);
+
+  const [qualityStatusData, setQualityStatusData] = useState([]);
+
+  const getValveData = (val) =>{
+    let num_valve = val.doc_num;
+    let data = []
+    for (let i = 0; i < num_valve; i++) {
+      data[i] = val[`d_${i + 1}`];
+    }
+    data.reverse(); //reverse array
+    setValveStatusData(data);
+  }
 
   const getTankData = (val) => {
-    let num_tank = val.level_num;
+    let num_tank = val.l_n;
     let data = [];
     for (let i = 0; i < num_tank; i++) {
-      data[i] = val[`level_${i + 1}`];
+      data[i] = val[`l_${i + 1}`];
+      data[i].level = Number(data[i].level);
     }
     setTankData(data);
   };
@@ -89,18 +51,32 @@ export default function HomeDash() {
     let num_flow = val.doc_num;
     let data = [];
     for (let i = 0; i < num_flow; i++) {
-      data[i] = val[`doc_${i + 1}`];
+      data[i] = val[`d_${i + 1}`];
     }
     data.reverse(); //reverse array
     setFlowRateData(data);
   };
 
+  const getWaterQualityData = (val) =>{
+    let num_quality = val.w_n;
+    let data = [];
+    for(let i = 0; i < num_quality; i++){
+      data[i] = val[`Q_${i+1}`];
+    }
+    setQualityStatusData(data);
+  }
+
   useEffect(() => {
     if (mqttClient) {
       mqttClient.on("message", (topic, message) => {
-        let data = JSON.parse(message);
-        getTankData(data);
-        getFlowRateData(data);
+        if(topic == Topic){
+          let data = JSON.parse(message);
+          getTankData(data);
+          getFlowRateData(data);
+          getValveData(data);
+          getWaterQualityData(data);
+        }
+        
       });
     }
   }, [mqttClient]);
@@ -128,7 +104,7 @@ export default function HomeDash() {
         <Col span={5}>
           <Card style={{ borderRadius: 15, height: 250 }}>
             <p className="title">Water Quality</p>
-            <WaterQuality data={{}} />
+            <WaterQuality data={qualityStatusData} />
           </Card>
         </Col>
         <Col span={6}>

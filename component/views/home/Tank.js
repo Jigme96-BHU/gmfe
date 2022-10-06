@@ -6,14 +6,6 @@ export default function Tank({ data }) {
     data,
     xField: "level_name",
     yField: "level",
-    // label: {
-    //   position: "bottom",
-    //   // 'top', 'bottom', 'middle',
-    //   style: {
-    //     fill: "black",
-    //     opacity: 0.8,
-    //   },
-    // },
     xAxis: {
       label: {
         autoHide: true,

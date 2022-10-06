@@ -1,6 +1,5 @@
 import { Card, Col, Row } from "antd";
 import { Liquid } from "@ant-design/plots";
-import WaterQuality from "./waterQuality";
 
 export default function TankLevel({ data }) {
   const total_capacity = 100;
@@ -45,10 +44,6 @@ export default function TankLevel({ data }) {
               })}
             </Row>
           </Card>
-        </Col>
-
-        <Col span={24}>
-          <WaterQuality data={{}} />
         </Col>
       </Row>
     </div>

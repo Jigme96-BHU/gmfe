@@ -1,19 +1,22 @@
 import React, { useEffect, useState } from "react";
-import { Button, Card, Col, Row } from "antd";
+import { Button, Card, Col, message, Row } from "antd";
 import { DownOutlined, UpOutlined } from "@ant-design/icons";
 import { Gauge } from "@ant-design/plots";
 import { useAppContent } from "../../../context/content";
 
 const SERVER = process.env.NEXT_PUBLIC_SERVER;
 
+const REPLYTOPIC = process.env.NEXT_PUBLIC_MQTT_TOPIC_REPLY;
+
 export default function ValveGuage({
   currentValve,
   setCurrentValve,
   node
 }) {
-  const { mqttPublish } = useAppContent();
+  const { mqttPublish, mqttClient } = useAppContent();
 
   let [ValveValue, setValveValue] = useState(0);
+  let [mqttValue, setMqttValve] = useState("");
 
   const getCurrentData = async () => {
     let body = {
@@ -30,8 +33,15 @@ export default function ValveGuage({
   };
 
   useEffect(() => {
+    if(mqttClient){
+      mqttClient.on('message',(topic,messages)=>{
+        if(topic == REPLYTOPIC){
+          message.success(messages.toString());
+        }
+      })
+    }
     setValveValue(currentValve.valve_percent);
-  }, [currentValve]);
+  }, [mqttClient]);
 
   const postServer = async ({ val }) => {
     try {
@@ -62,26 +72,37 @@ export default function ValveGuage({
 
   const handleIncrement = () => {
     if (ValveValue < 100) {
-      let newVal = Number(ValveValue) + 25;
-      if (newVal > 100) {
-        setValveValue(100);
+      let newVal = Number(ValveValue) + 10;
+      if (newVal > 90) {
+        setValveValue(90);
+        setMqttValve('i')
       } else {
         setValveValue(newVal);
+        setMqttValve('i')
       }
     }
   };
 
   const handleDecrement = () => {
+
     if (ValveValue > 0) {
-      let newVal = ValveValue - 25;
+
+      let newVal = ValveValue - 10;
+      if(newVal < 10){
+        setValveValue(10);
+        setMqttValve('c')
+      }else{
       setValveValue(newVal);
+      setMqttValve('r')
+      }
     }
   };
 
   const handleValve = () => {
+    console.log(currentValve.node_name);
     mqttPublish({
       topic: currentValve.node_name,
-      val: currentValve.valve_name + String(ValveValue),
+      val: currentValve.valve_name + mqttValue + String(ValveValue),
     });
     postServer({ val: ValveValue });
     getCurrentData();

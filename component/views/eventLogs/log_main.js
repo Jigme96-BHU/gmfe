@@ -45,6 +45,7 @@ const chartDemo = () =>{
       setYField('level');
     }else{
       setYField('flow_rate');
+      
     }
   };
 

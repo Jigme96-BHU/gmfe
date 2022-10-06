@@ -4,6 +4,8 @@ import { useAppContent } from "../../../context/content";
 import FlowMeterDisplay from "./flowMeterDisplay";
 import TankLevel from "./tankLevel";
 import WaterLoss from "./waterLoss";
+// import WaterQuality from "./waterQuality";
+import WaterQuality from "./waterQuality";
 
 export default function WaterFlowDash() {
   const { mqttClient } = useAppContent();
@@ -24,21 +26,31 @@ export default function WaterFlowDash() {
   ]);
 
   const [FlowRateData, setFlowRateData] = useState([]);
+  const [qualityStatusData, setQualityStatusData] = useState([]);
 
   const getTankData = (val) => {
-    let num_tank = val.level_num;
+    let num_tank = val.l_n;
     let data = [];
     for (let i = 0; i < num_tank; i++) {
-      data[i] = val[`level_${i + 1}`];
+      data[i] = val[`l_${i + 1}`];
     }
     setTankData(data);
   };
+
+  const getWaterQualityData = (val) =>{
+    let num_quality = val.w_n;
+    let data = [];
+    for(let i = 0; i < num_quality; i++){
+      data[i] = val[`Q_${i+1}`];
+    }
+    setQualityStatusData(data);
+  }
 
   const getFlowRateData = (val) => {
     let num_flow = val.doc_num;
     let data = [];
     for (let i = 0; i < num_flow; i++) {
-      data[i] = val[`doc_${i + 1}`];
+      data[i] = val[`d_${i + 1}`];
       data[i].key = i;
     }
     data.reverse(); //reverse array
@@ -51,6 +63,7 @@ export default function WaterFlowDash() {
         let data = JSON.parse(message);
         getFlowRateData(data);
         getTankData(data);
+        getWaterQualityData(data);
       });
     }
   }, [mqttClient]);
@@ -70,6 +83,7 @@ export default function WaterFlowDash() {
         </Col>
         <Col span={16}>
           <TankLevel data={TankData} />
+          <WaterQuality data={qualityStatusData}/>
         </Col>
       </Row>
     </div>
