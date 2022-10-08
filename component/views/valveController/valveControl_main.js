@@ -5,6 +5,7 @@ import ValveOptions from "./valveOptions";
 
 // const HOST = process.env.NEXT_PUBLIC_HOST;
 const SERVER = process.env.NEXT_PUBLIC_SERVER;
+
 export default function ValveControlDash() {
   const [valveList, setValveList] = useState([]);
   let [config, setConfig] = useState({
@@ -16,6 +17,7 @@ export default function ValveControlDash() {
     const getValveList = async () => {
       try {
         let response = await fetch(SERVER + "/data/valvelist");
+        // let response = await fetch(HOST + "/api/valve/valveList");
         response = await response.json();
         if (response.status) {
           let valveList = response.data;
