@@ -1,19 +1,17 @@
-import React, { useEffect, useState } from "react";
-import { Button, Card, Col, message, Row } from "antd";
+import React, { useState } from "react";
+import { Button, Card, Col, Row } from "antd";
 import { DownOutlined, UpOutlined } from "@ant-design/icons";
 import { Gauge } from "@ant-design/plots";
 import { useAppContent } from "../../../context/content";
 
 const SERVER = process.env.NEXT_PUBLIC_SERVER;
 
-const REPLYTOPIC = process.env.NEXT_PUBLIC_MQTT_TOPIC_REPLY;
-
 export default function ValveGuage({
   currentValve,
   setCurrentValve,
   node
 }) {
-  const { mqttPublish, mqttClient } = useAppContent();
+  const { mqttPublish } = useAppContent();
 
   let [ValveValue, setValveValue] = useState(0);
   let [mqttValue, setMqttValve] = useState("");
@@ -31,17 +29,6 @@ export default function ValveGuage({
     response = await response.json();
     setCurrentValve(response.data);
   };
-
-  useEffect(() => {
-    if(mqttClient){
-      mqttClient.on('message',(topic,messages)=>{
-        if(topic == REPLYTOPIC){
-          message.success(messages.toString());
-        }
-      })
-    }
-    setValveValue(currentValve.valve_percent);
-  }, [mqttClient]);
 
   const postServer = async ({ val }) => {
     try {

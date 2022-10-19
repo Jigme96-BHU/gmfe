@@ -15,7 +15,8 @@ export default async function Logout(req, res) {
 
       res.setHeader("Set-Cookie", serialised);
 
-      res.json({ status: true }); //logged out
+      // res.json({ status: true }); //logged out
+      res.redirect("/auth/login");
     } catch (error) {
       res.json({ status: false }); //not logged out
     }
