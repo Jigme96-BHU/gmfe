@@ -8,18 +8,18 @@ const cookie_name = process.env.COOKIE_NAME; // cookie name eg jwt
 
 export default async function AuthLogin(req, res) {
   const { email, password } = req.body;
- 
+
   let url = server + '/data/login';
 
-  let response = await fetch(url,{
-    method:'POST',
-    headers:{"Content-Type":"application/json"},
-    body: JSON.stringify({email,password})
+  let response = await fetch(url, {
+    method: 'POST',
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email, password })
   })
 
-  response = await response.json(); 
+  response = await response.json();
 
- // check if user is authenticated
+  // check if user is authenticated
   if (response.status) {
     // create jwt token
     const token = sign(
@@ -40,7 +40,7 @@ export default async function AuthLogin(req, res) {
     });
     // set cookie
     res.setHeader("Set-Cookie", serialised);
-    
+
   }
   res.json(response);
 }

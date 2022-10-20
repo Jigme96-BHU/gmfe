@@ -16,7 +16,7 @@ export default function WaterFlowDash() {
       total_flow: 0,
       voltage: 0,
       level: 0,
-    },{
+    }, {
       level_name: "level2",
       flow_rate: 0,
       total_flow: 0,
@@ -37,11 +37,11 @@ export default function WaterFlowDash() {
     setTankData(data);
   };
 
-  const getWaterQualityData = (val) =>{
+  const getWaterQualityData = (val) => {
     let num_quality = val.w_n;
     let data = [];
-    for(let i = 0; i < num_quality; i++){
-      data[i] = val[`Q_${i+1}`];
+    for (let i = 0; i < num_quality; i++) {
+      data[i] = val[`Q_${i + 1}`];
     }
     setQualityStatusData(data);
   }
@@ -83,7 +83,7 @@ export default function WaterFlowDash() {
         </Col>
         <Col span={16}>
           <TankLevel data={TankData} />
-          <WaterQuality data={qualityStatusData}/>
+          <WaterQuality data={qualityStatusData} />
         </Col>
       </Row>
     </div>

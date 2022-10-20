@@ -33,9 +33,9 @@ export default function ValveGuage({
   };
 
   useEffect(() => {
-    if(mqttClient){
-      mqttClient.on('message',(topic,messages)=>{
-        if(topic == REPLYTOPIC){
+    if (mqttClient) {
+      mqttClient.on('message', (topic, messages) => {
+        if (topic == REPLYTOPIC) {
           message.success(messages.toString());
         }
       })
@@ -88,12 +88,12 @@ export default function ValveGuage({
     if (ValveValue > 0) {
 
       let newVal = ValveValue - 10;
-      if(newVal < 10){
+      if (newVal < 10) {
         setValveValue(10);
         setMqttValve('c')
-      }else{
-      setValveValue(newVal);
-      setMqttValve('r')
+      } else {
+        setValveValue(newVal);
+        setMqttValve('r')
       }
     }
   };

@@ -62,7 +62,7 @@ export default function ValveControlDash() {
           }
           setValveList(valveObj);
         }
-      } catch (error) {}
+      } catch (error) { }
     };
     getValveList();
   }, []);

@@ -6,29 +6,29 @@ const SERVER = process.env.NEXT_PUBLIC_SERVER;
 
 export default function Valve() {
 
-  const [tabelData,setTableData] = useState([]);
+  const [tabelData, setTableData] = useState([]);
 
-  useEffect(()=>{
-    const valveData = async()=>{
+  useEffect(() => {
+    const valveData = async () => {
       try {
         let response = await fetch(SERVER + "/data/valvelist");
         response = await response.json();
-        if(response.status){
+        if (response.status) {
           let valList = response.data;
 
-          for(let i=0;i<valList.length; i++){
+          for (let i = 0; i < valList.length; i++) {
             valList[i].key = i;
-            
+
           }
           console.log(valList);
           setTableData(valList);
         }
       } catch (error) {
-        console.log(error);  
+        console.log(error);
       }
     };
     valveData();
-  },[])
+  }, [])
 
   const column = [
     {
@@ -62,13 +62,13 @@ export default function Valve() {
       title: "Date and Time ON/OFF",
       dataIndex: "updatedAt",
       key: "updatedAt",
-      render:(_,record)=>{
-        return <span> {moment(record.updatedAt).format("YYYY/MM/DD HH:MM:S")} </span> ;
-    }
+      render: (_, record) => {
+        return <span> {moment(record.updatedAt).format("YYYY/MM/DD HH:MM:S")} </span>;
+      }
 
     },
   ];
-  return ( 
+  return (
     <Card
       style={{
         borderRadius: 16,
@@ -77,7 +77,7 @@ export default function Valve() {
       }}
     >
       <p className="title">Valve</p>
-      <Table bordered dataSource={tabelData} pagination={{pageSize:6}} columns={column} />
+      <Table bordered dataSource={tabelData} pagination={{ pageSize: 6 }} columns={column} />
     </Card>
   );
 }

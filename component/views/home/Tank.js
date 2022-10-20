@@ -14,7 +14,7 @@ export default function Tank({ data }) {
     },
   };
   return (
-    <Row gutter={[0,8]}>
+    <Row gutter={[0, 8]}>
       <Col span={24}>
         <Row justify="space-around">
           {data.map((val, i) => {

@@ -13,7 +13,7 @@ export default function WaterQuality({ data }) {
                   <p className="sub_title">{val.Quality_name}</p>
                 </Col>
                 <Col style={{ width: 50 }}>
-                  <p style={{ color:"black" }} className = "sub_title">{val.value}</p>
+                  <p style={{ color: "black" }} className="sub_title">{val.value}</p>
                 </Col>
               </Row>
             </Col>

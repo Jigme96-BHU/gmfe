@@ -7,7 +7,7 @@ import Tank from "./Tank";
 import ValveStatus from "./ValveStatus";
 import WaterQuality from "./WaterQuality";
 
-const Topic = process.env.NEXT_PUBLIC_MQTT_TOPIC; 
+const Topic = process.env.NEXT_PUBLIC_MQTT_TOPIC;
 
 export default function HomeDash() {
   const { mqttClient } = useAppContent();
@@ -27,7 +27,7 @@ export default function HomeDash() {
 
   const [qualityStatusData, setQualityStatusData] = useState([]);
 
-  const getValveData = (val) =>{
+  const getValveData = (val) => {
     let num_valve = val.doc_num;
     let data = []
     for (let i = 0; i < num_valve; i++) {
@@ -57,11 +57,11 @@ export default function HomeDash() {
     setFlowRateData(data);
   };
 
-  const getWaterQualityData = (val) =>{
+  const getWaterQualityData = (val) => {
     let num_quality = val.w_n;
     let data = [];
-    for(let i = 0; i < num_quality; i++){
-      data[i] = val[`Q_${i+1}`];
+    for (let i = 0; i < num_quality; i++) {
+      data[i] = val[`Q_${i + 1}`];
     }
     setQualityStatusData(data);
   }
@@ -69,14 +69,14 @@ export default function HomeDash() {
   useEffect(() => {
     if (mqttClient) {
       mqttClient.on("message", (topic, message) => {
-        if(topic == Topic){
+        if (topic == Topic) {
           let data = JSON.parse(message);
           getTankData(data);
           getFlowRateData(data);
           getValveData(data);
           getWaterQualityData(data);
         }
-        
+
       });
     }
   }, [mqttClient]);

@@ -14,14 +14,14 @@ export default function Water_loss() {
   const [maintown, setMainTown] = useState('No Data')
   const [chabjey, setChabjey] = useState('No Data')
 
-  useEffect(() => {SocketInitializer(),[]})
+  useEffect(() => { SocketInitializer(), [] })
 
-  const SocketInitializer = async () =>{
+  const SocketInitializer = async () => {
     const socket = await io('http://localhost:5001');
-    socket.on('connection',()=>{
+    socket.on('connection', () => {
       console.log('socket Connected')
     })
-    socket.on('message',(data)=>{
+    socket.on('message', (data) => {
       let userobj = JSON.parse(data)
       const small_town = userobj.small_town;
       setInput(small_town);
@@ -129,7 +129,7 @@ export default function Water_loss() {
       }}
     >
       <p className="title">Water Loss</p>
-      <Table bordered dataSource={Data} pagination={{pageSize:5}} columns={column} />
+      <Table bordered dataSource={Data} pagination={{ pageSize: 5 }} columns={column} />
     </Card>
   );
 }
