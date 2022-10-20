@@ -7,7 +7,9 @@ import {
   ExperimentOutlined,
   HomeFilled,
   LoginOutlined,
+  LogoutOutlined,
   UserAddOutlined,
+  UserOutlined,
 } from "@ant-design/icons";
 import Image from "next/image";
 import Link from "next/link";
@@ -56,13 +58,25 @@ export default function Header({ children }) {
     },
     {
       key: 7,
-      label: <Link href="/auth/login">Login</Link>,
-      icon: <LoginOutlined />,
-    },
-    {
-      key: 8,
-      label: <Link href="/auth/signup">SignUp</Link>,
-      icon: <UserAddOutlined />,
+      label: "Account",
+      icon: <UserOutlined />,
+      children: [
+        {
+          key: "sub-1",
+          label: <Link href="/auth/login">Login</Link>,
+          icon: <LoginOutlined />,
+        },
+        {
+          key: "sub-2",
+          label: <Link href="/api/auth/logout">Logout</Link>,
+          icon: <LogoutOutlined />,
+        },
+        {
+          key: "sub-3",
+          label: <Link href="/auth/signup">SignUp</Link>,
+          icon: <UserAddOutlined />,
+        },
+      ],
     },
   ];
 

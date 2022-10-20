@@ -3,9 +3,9 @@ import HomeDash from "../component/views/home/home_main";
 import { useAppContent } from "../context/content";
 
 export default function HomePage() {
-  const { setTitle } = useAppContent();
+  const { setTitle} = useAppContent();
   useEffect(() => {
     setTitle("DHI Water Management System");
-  });
+  },[]);
   return <HomeDash />;
 }

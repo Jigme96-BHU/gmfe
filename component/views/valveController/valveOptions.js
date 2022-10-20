@@ -1,7 +1,9 @@
-import React from "react";
-import { Card, Cascader, Col, Row, Select } from "antd";
+import React, { useEffect, useState } from "react";
+import { Card, Cascader, Col, Row } from "antd";
+import { useAppContent } from "../../../context/content";
 
 const SERVER = process.env.NEXT_PUBLIC_SERVER;
+const REPLYTOPIC = process.env.NEXT_PUBLIC_MQTT_TOPIC_REPLY;
 
 export default function ValveOptions({
   valveList,
@@ -9,6 +11,10 @@ export default function ValveOptions({
   currentValve,
   setConfig,
 }) {
+  let { mqttClient } = useAppContent();
+
+  let [response, setResponse] = useState("");
+
   const getCurrentData = async (a, b) => {
     setConfig({
       node: a,
@@ -27,6 +33,17 @@ export default function ValveOptions({
 
     setCurrentValve(response.data);
   };
+
+  useEffect(() => {
+    if (mqttClient) {
+      mqttClient.on("message", (topic, messages) => {
+        if (topic == REPLYTOPIC) {
+          // console.log(topic, messages.toString());
+          setResponse(messages.toString());
+        }
+      });
+    }
+  }, [mqttClient]);
 
   return (
     <Card
@@ -78,6 +95,12 @@ export default function ValveOptions({
           </Col>
           <Col span={12}>
             <b>{currentValve.valve_status}</b>
+          </Col>
+          <Col span={12}>
+            <p className="sub_title">RESPONSE :</p>
+          </Col>
+          <Col span={12}>
+            <b>{response}</b>
           </Col>
         </Row>
       </Card>

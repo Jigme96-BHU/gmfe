@@ -21,16 +21,21 @@ export default function ValveControlDash() {
         response = await response.json();
         if (response.status) {
           let valveList = response.data;
-          /* structuring data to impliment cascade
-            const valveList = [{
-              label: "node",
-              value: "node",
-              children: [{
-                label, "valve"
-                value:"valve"
-              }]
-            }]
-          */
+
+          // structuring data to impliment cascade
+          /*const valveList = [
+          {
+            label: "node",
+            value: "node",
+            children: [
+              {
+                label: "valve",
+                value: "valve",
+              },
+            ],
+          },
+        ];
+        */
           let groupedList = valveList.reduce((acc, value) => {
             // Group initialization
             if (!acc[value.node_name]) {
