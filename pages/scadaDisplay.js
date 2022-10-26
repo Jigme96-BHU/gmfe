@@ -32,3 +32,6 @@ export async function getServerSideProps({ req }) {
 export default function ScadaDisplay({ jwt, user }) {
   return <ScadaDisplayMain />;
 }
+
+
+

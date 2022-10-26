@@ -15,6 +15,14 @@ export const getDailyDataLevel = async (data) => {
   return response;
 
 }
+export const getDailyDataQuality = async (data) => {
+  const date = data.date;
+  let url = server + "/data/log/quality/anyday"
+  let response = await POST({ url, props: { date } });
+  return response;
+
+}
+
 
 export const getMonthlyData = async (data) => {
   const date = data.date;
@@ -29,6 +37,12 @@ export const getMonthlyDataLevel = async (data) => {
   let response = await POST({ url, props: { date } });
   return response;
 }
+export const getMonthlyDataQuality = async (data) => {
+  const date = data.date;
+  let url = server + "/data/log/quality/month";
+  let response = await POST({ url, props: { date } });
+  return response;
+}
 
 export const getWeeklyData = async (data) => {
   const date = data.date;
@@ -40,6 +54,13 @@ export const getWeeklyData = async (data) => {
 export const getWeeklyDataLevel = async (data) => {
   const date = data.date;
   let url = server + "/data/log/level/weekly";
+  let response = await POST({ url, props: { date } });
+  return response;
+}
+
+export const getWeeklyDataQuality = async (data) => {
+  const date = data.date;
+  let url = server + "/data/log/quality/weekly";
   let response = await POST({ url, props: { date } });
   return response;
 }

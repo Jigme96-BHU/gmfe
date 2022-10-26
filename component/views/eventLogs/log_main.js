@@ -6,19 +6,18 @@ import { getRenderPropValue } from "antd/lib/_util/getRenderPropValue";
 const server = process.env.NEXT_PUBLIC_SERVER
 import { Line, Bar } from '@ant-design/plots'
 
-import { getDailyData, getWeeklyDataLevel } from './log'
-import { getMonthlyData } from "./log";
-import { getDailyDataLevel } from "./log";
-import { getMonthlyDataLevel } from "./log";
-import { getWeeklyData } from "./log";
+import { getDailyData, getDailyDataLevel, getDailyDataQuality } from './log'
+import { getMonthlyData , getMonthlyDataLevel, getMonthlyDataQuality } from "./log";
+import { getWeeklyData, getWeeklyDataLevel, getWeeklyDataQuality } from "./log";
 const { Option } = Select;
 
 const sensorData = ['FlowMeter', 'LevelSensor', 'QualitySensor'];
 const eachSensorData = {
-  FlowMeter: ['FM1', 'FM2', 'FM3', 'FM4', 'FM5', 'FM6', 'FM7', 'FM8', 'FM9', 'FM10', 'FM11', 'FM12', 'FM13', 'FM14', 'FM15', 'FM16', 'FM17'],
-  LevelSensor: ['level1', 'level2'],
-  QualitySensor: ['Q1', 'Q2', 'Q3'],
+  FlowMeter: ['Police_end1', 'Police_Col1', 'Bhu_Police2', 'Bhu_Col2', 'School_Bhu3', 'School_Col3','Town_School4','Town_Line4', 'Tri_Town5', 'Lower_Town5', 'Kst_In6', 'Kst_Tank6', 'Depong7', 'Tsangkhar7', 'Royal_Tank8', 'Public_InR9', 'Public_InL9', 'Public_Out9'],
+  LevelSensor: ['Royal_Level', 'Public_Level'],
+  QualitySensor: ['TDS', 'PH', 'Turbidity'],
 };
+
 
 const PickWithType = ({ type, onChange }) => {
   if (type === 'date') return <DatePicker onChange={onChange} />;
@@ -43,9 +42,10 @@ const chartDemo = () => {
     setSensorType(value);
     if (value === 'LevelSensor') {
       setYField('level');
-    } else {
-      setYField('flow_rate');
-
+    }else if(value === 'FlowMeter'){
+      setYField('flow_meter');
+    }else if(value === 'QualitySensor'){
+      setYField('value');
     }
   };
 
@@ -114,8 +114,28 @@ const chartDemo = () => {
           })
           setData(filterdata);
         }
-      }
+      }else if (sensorType == 'QualitySensor'){
+        if(period === 'anyday'){
+          let response = await getDailyDataQuality({ date });
+          let filterdata = response.filter((val)=>{
+            return val.value_name === secondSensor;
+          })
+          setData(filterdata);
+        }
+      }else if (period === "month") {
+        let response = await getMonthlyDataQuality({ date });
+        let filterdata = response.filter((val) => {
+          return val.level_name === secondSensor;
+        })
+        setData(filterdata);
 
+      } else if (period === "weekly") {
+        let response = await getWeeklyDataQuality({ date });
+        let filterdata = response.filter((val) => {
+          return val.level_name === secondSensor;
+        })
+        setData(filterdata);
+      }
 
 
     } catch (err) {
@@ -145,7 +165,7 @@ const chartDemo = () => {
             <Option key={sensor}>{sensor}</Option>
           ))}
         </Select>
-        <Select value={secondSensor} style={{ width: 90, }} onChange={OnSecondSensorChange}>
+        <Select value={secondSensor} style={{ width: 140, }} onChange={OnSecondSensorChange}>
           {sensor.map((sensor) => (
             <Option key={sensor}>{sensor}</Option>
           ))}

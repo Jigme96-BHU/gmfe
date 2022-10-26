@@ -30,20 +30,6 @@ export default function ValveGuage({
     setCurrentValve(response.data);
   };
 
-<<<<<<< HEAD
-  useEffect(() => {
-    if (mqttClient) {
-      mqttClient.on('message', (topic, messages) => {
-        if (topic == REPLYTOPIC) {
-          message.success(messages.toString());
-        }
-      })
-    }
-    setValveValue(currentValve.valve_percent);
-  }, [mqttClient]);
-
-=======
->>>>>>> ab3c6f04ca8c2731f07034b768d7a6aa52258d63
   const postServer = async ({ val }) => {
     try {
       let { node_name, valve_name } = currentValve;
@@ -54,7 +40,7 @@ export default function ValveGuage({
         node_name,
         valve_name,
         valve_percent: val,
-        valve_status: val == 0 ? "OFF" : "ON",
+        valve_status: val == 0 ? "CLOSE" : "OPEN",
         date,
       };
       let response = await fetch(url, {
@@ -89,8 +75,8 @@ export default function ValveGuage({
     if (ValveValue > 0) {
 
       let newVal = ValveValue - 10;
-      if (newVal < 10) {
-        setValveValue(10);
+      if (newVal <= 0) {
+        setValveValue(0);
         setMqttValve('c')
       } else {
         setValveValue(newVal);

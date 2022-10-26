@@ -4,7 +4,6 @@ import { useAppContent } from "../../../context/content";
 
 const SERVER = process.env.NEXT_PUBLIC_SERVER;
 const REPLYTOPIC = process.env.NEXT_PUBLIC_MQTT_TOPIC_REPLY;
-
 export default function ValveOptions({
   valveList,
   setCurrentValve,
@@ -30,8 +29,8 @@ export default function ValveOptions({
       body: JSON.stringify(body),
     });
     response = await response.json();
-
     setCurrentValve(response.data);
+
   };
 
   useEffect(() => {
@@ -97,10 +96,14 @@ export default function ValveOptions({
             <b>{currentValve.valve_status}</b>
           </Col>
           <Col span={12}>
-            <p className="sub_title">RESPONSE :</p>
+            <p className="sub_title">Valve feedback:</p>
           </Col>
           <Col span={12}>
             <b>{response}</b>
+          </Col>
+
+          <Col span={12}>
+            <p className="sub_title">Valve percent:</p>
           </Col>
         </Row>
       </Card>
