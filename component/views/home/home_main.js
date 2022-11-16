@@ -1,5 +1,4 @@
-import { Card, Col, Row } from "antd";
-import React, { useEffect, useState } from "react";
+import { Card, Col, Row } from "antd"
 import { useAppContent } from "../../../context/content";
 import AlarmsEvents from "./AlarmsEvents";
 import FlowRate from "./FlowRate";
@@ -10,6 +9,7 @@ import WaterQuality from "./WaterQuality";
 const Topic = process.env.NEXT_PUBLIC_MQTT_TOPIC;
 
 export default function HomeDash() {
+  
   const { mqttClient } = useAppContent();
   const [TankData, setTankData] = useState([
     {
