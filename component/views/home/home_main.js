@@ -7,7 +7,7 @@ import ValveStatus from "./ValveStatus";
 import WaterQuality from "./WaterQuality";
 import { useState, useEffect } from "react";
 
-const Topic = process.env.NEXT_PUBLIC_MQTT_TOPIC;
+// const Topic = process.env.NEXT_PUBLIC_MQTT_TOPIC;
 
 export default function HomeDash() {
   
@@ -70,13 +70,15 @@ export default function HomeDash() {
   useEffect(() => {
     if (mqttClient) {
       mqttClient.on("message", (topic, message) => {
-        
+        try {
           let data = JSON.parse(message);
           getTankData(data);
           getFlowRateData(data);
           getValveData(data);
           getWaterQualityData(data);
-
+        } catch (err) {
+          console.log('error', err);
+        }
       });
     }
   }, [mqttClient]);
