@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button, Card, Col, Row } from "antd";
 import { DownOutlined, UpOutlined } from "@ant-design/icons";
 import { Gauge } from "@ant-design/plots";
@@ -94,6 +94,10 @@ export default function ValveGuage({
     postServer({ val: ValveValue });
     getCurrentData();
   };
+
+  useEffect(() => {
+    setValveValue(currentValve.valve_percent);
+  }, [currentValve]);
 
   //guage config
   const config = {

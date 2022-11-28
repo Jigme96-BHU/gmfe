@@ -70,13 +70,12 @@ export default function HomeDash() {
   useEffect(() => {
     if (mqttClient) {
       mqttClient.on("message", (topic, message) => {
-        if (topic == Topic) {
+        
           let data = JSON.parse(message);
           getTankData(data);
           getFlowRateData(data);
           getValveData(data);
           getWaterQualityData(data);
-        }
 
       });
     }
