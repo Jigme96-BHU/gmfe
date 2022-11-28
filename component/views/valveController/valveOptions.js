@@ -105,6 +105,10 @@ export default function ValveOptions({
           <Col span={12}>
             <p className="sub_title">Valve percent:</p>
           </Col>
+
+          <Col span={12}>
+            <b>{currentValve.valve_percent}</b>
+          </Col>
         </Row>
       </Card>
     </Card>

@@ -5,6 +5,7 @@ import FlowRate from "./FlowRate";
 import Tank from "./Tank";
 import ValveStatus from "./ValveStatus";
 import WaterQuality from "./WaterQuality";
+import { useState, useEffect } from "react";
 
 const Topic = process.env.NEXT_PUBLIC_MQTT_TOPIC;
 
@@ -85,13 +86,13 @@ export default function HomeDash() {
       <Row gutter={[8, 8]}>
         <Col span={8}>
           <Card style={{ borderRadius: 15, height: 260 }}>
-            <p className="title">Tank Water Level</p>
+            <p className="title">Tank Water Level(Meters)</p>
             <Tank data={TankData} />
           </Card>
         </Col>
         <Col span={16}>
           <Card style={{ borderRadius: 15, height: 260, overflow: "auto" }}>
-            <p className="title">Flow Rate Display</p>
+            <p className="title">Flow Rate Display(m<sup>3</sup>/hour)</p>
             <FlowRate data={FlowRateData} />
           </Card>
         </Col>
