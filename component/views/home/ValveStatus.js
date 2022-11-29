@@ -15,7 +15,7 @@ export default function ValveStatus({ data }) {
                 <Col span={12}>
                   <Row justify="space-between">
                     <Col span={12}>
-                      <p style={{ fontWeight: "bold", padding:6 }}>{val.valve_position}</p>
+                      <p style={{ fontWeight: "bold", padding: 6 }}>{val.valve_position}</p>
                     </Col>
                   </Row>
                 </Col>

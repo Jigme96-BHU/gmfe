@@ -14,7 +14,7 @@ export default function WaterQuality({ data }) {
                   <p className="sub_title">{val.Quality_name}</p>
                 </Col>
                 <Col span={24} style={{ width: 50 }}>
-                  <p className="sub_title">{ i === 1 ? val.value /100 : val.value}</p>
+                  <p className="sub_title">{i === 1 ? val.value / 100 : val.value}</p>
                 </Col>
               </Row>
             </Col>

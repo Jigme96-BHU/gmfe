@@ -23,7 +23,7 @@ import { useAppContent } from "../../context/content";
 const { Content, Sider } = Layout;
 
 export default function Header({ children }) {
-  
+
   const { title, sliderCollapsed, setSliderCollapsed } = useAppContent();
 
   const Menu_List = [

@@ -10,7 +10,7 @@ import { useState, useEffect } from "react";
 // const Topic = process.env.NEXT_PUBLIC_MQTT_TOPIC;
 
 export default function HomeDash() {
-  
+
   const { mqttClient } = useAppContent();
   const [TankData, setTankData] = useState([
     {
