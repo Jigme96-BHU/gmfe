@@ -60,10 +60,17 @@ export default function WaterFlowDash() {
   useEffect(() => {
     if (mqttClient) {
       mqttClient.on("message", (topic, message) => {
-        let data = JSON.parse(message);
-        getFlowRateData(data);
-        getTankData(data);
-        getWaterQualityData(data);
+
+        try {
+          let data = JSON.parse(message);
+          getFlowRateData(data);
+          getTankData(data);
+          getWaterQualityData(data);
+        } catch (err) {
+          console.log('err', err);
+
+        }
+
       });
     }
   }, [mqttClient]);

@@ -46,7 +46,7 @@ export default function Valve() {
       dataIndex: "valve_status",
       render: (_, record) => (
         <>
-          {record.valve_status == "ON" ? (
+          {record.valve_status == "OPEN" ? (
             <div className="on">
               <span>ON</span>
             </div>

@@ -1,22 +1,23 @@
 import { Col, Row } from "antd";
 
+
 export default function ValveStatus({ data }) {
   return (
-    <div>
-      <Row justify="start" gutter={[16, 0]}>
+    <div style={{ padding: 10 }}>
+      <Row justify="start">
         {data.map((val, i) => {
           return (
-            <Col span={8} key={i}>
-              <Row gutter={[8, 8]} justify="space-evenly">
-                <Col style={{ width: 90 }}>
+            <Col key={i} span={8}>
+              <Row justify="start">
+                <Col span={12}>
                   <p className="sub_title">{val.flow_name}</p>
                 </Col>
-                <Col style={{ width: 50 }}>
-                  {val.valve_position > 0 ? (
-                    <div className="on">ON</div>
-                  ) : (
-                    <div className="off">OFF</div>
-                  )}
+                <Col span={12}>
+                  <Row justify="space-between">
+                    <Col span={12}>
+                      <p style={{ fontWeight: "bold", padding:6 }}>{val.valve_position}</p>
+                    </Col>
+                  </Row>
                 </Col>
               </Row>
             </Col>

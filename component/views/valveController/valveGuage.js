@@ -13,7 +13,7 @@ export default function ValveGuage({
 }) {
   const { mqttPublish } = useAppContent();
 
-  let [ValveValue, setValveValue] = useState(0);
+  let [ValveValue, setValveValue] = useState('');
   let [mqttValue, setMqttValve] = useState("");
 
   const getCurrentData = async () => {
@@ -59,7 +59,7 @@ export default function ValveGuage({
 
   const handleIncrement = () => {
     if (ValveValue < 100) {
-      let newVal = Number(ValveValue) + 10;
+      let newVal = Number(ValveValue) + 5;
       if (newVal > 90) {
         setValveValue(90);
         setMqttValve('i')
@@ -74,7 +74,7 @@ export default function ValveGuage({
 
     if (ValveValue > 0) {
 
-      let newVal = ValveValue - 10;
+      let newVal = ValveValue - 5;
       if (newVal <= 0) {
         setValveValue(0);
         setMqttValve('c')

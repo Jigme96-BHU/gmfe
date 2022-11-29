@@ -99,7 +99,7 @@ export default function HomeDash() {
         </Col>
         <Col span={13}>
           <Card style={{ borderRadius: 15, height: 250, overflow: "auto" }}>
-            <p className="title">Valve Status</p>
+            <p className="title">Valve Position</p>
             <ValveStatus data={ValveStatusData} />
           </Card>
         </Col>

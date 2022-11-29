@@ -112,7 +112,7 @@ export default function Water_loss() {
       render: (_, record) => (
         <>
           {record.flow_rate_diff > 0 ? (
-            <div className="on">Operational</div>
+            <div className="on">Okey</div>
           ) : (
             <div className="off">Defunct</div>
           )}
