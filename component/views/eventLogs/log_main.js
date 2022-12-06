@@ -13,7 +13,9 @@ const { Option } = Select;
 
 const sensorData = ['FlowMeter', 'LevelSensor', 'QualitySensor'];
 const eachSensorData = {
-  FlowMeter: ['Police_end1', 'Police_Col1', 'Bhu_Police2', 'Bhu_Col2', 'School_Bhu3', 'School_Col3', 'Town_School4', 'Town_Line4', 'Tri_Town5', 'Lower_Town5', 'Kst_In6', 'Kst_Tank6', 'Depong7', 'Tsangkhar7', 'Royal_Tank8', 'Public_InR9', 'Public_InL9', 'Public_Out9'],
+  FlowMeter: ['Public_OutA', 'Public_InL_B', 'Public_InR_B', 'Royal_TankA', 'TsangkharN',
+              'DepongA', 'JE_ZimchungA', 'KHPC_TankB', 'Lower_TownA', 'TRI_TownB', 'TOWN_LineA',
+              'TOWN_SchoolN', 'SCHOOL_ColA', 'SCHOOL_BhuN', 'BHU_ColA', 'BHU_RbpB', 'RBP_ColA', 'RBP_endB'],
   LevelSensor: ['Royal_Level', 'Public_Level'],
   QualitySensor: ['TDS', 'PH', 'Turbidity'],
 };
@@ -55,10 +57,15 @@ const chartDemo = () => {
 
   const config = {
     data,
-    width: 600,
-    height: 400,
-    autoFit: false,
+    width: 1000,
+    height: 600,
+    autoFit: true,
     xField: 'createdAt',
+    // xAxis: {
+    //   label:{
+    //     formatter:({data[0]})=> 777
+    //   }
+    // },
     yField: yField,
 
   }
@@ -76,6 +83,7 @@ const chartDemo = () => {
           let filterdata = response.filter((val) => {
             return val.flow_name === secondSensor;
           });
+          console.log(filterdata);
           setData(filterdata);
 
         } else if (period === "month") {

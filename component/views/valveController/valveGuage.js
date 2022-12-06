@@ -75,7 +75,7 @@ export default function ValveGuage({
     if (ValveValue > 0) {
 
       let newVal = ValveValue - 5;
-      if (newVal <= 0) {
+      if (newVal == 0) {
         setValveValue(0);
         setMqttValve('c')
       } else {

@@ -41,12 +41,35 @@ export default function HomeDash() {
   const getTankData = (val) => {
     let num_tank = val.l_n;
     let data = [];
+
     for (let i = 0; i < num_tank; i++) {
       data[i] = val[`l_${i + 1}`];
-      data[i].level = Number(data[i].level);
+
+      let tankname = data[i].level_name;
+
+      if( tankname == 'Royal_Level'){
+
+        try {
+          data[i].level = Number(4.120 - data[i].level)
+        } catch (error) {
+          console.log(error);
+          
+        }
+      }else{
+
+        try {
+          data[i].level = Number(4.370 - data[i].level)
+        } catch (error) {
+          console.log(error);
+        }
+        
+      }
+
     }
     setTankData(data);
   };
+
+
 
   const getFlowRateData = (val) => {
     let num_flow = val.doc_num;

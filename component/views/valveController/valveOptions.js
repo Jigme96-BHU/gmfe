@@ -51,6 +51,7 @@ export default function ValveOptions({
       case '03':
         setIsSuccess(false)
         setNodeName('RBP')
+        break;
       // 04 is from gateway and should be ignored
       case '05':
         setIsSuccess(false)
@@ -80,8 +81,6 @@ export default function ValveOptions({
         setIsSuccess(false)
         setNodeName('Error')
     }
-    console.log("message: " + responseMessage)
-    console.log("error code: " + responseNumber)
 
   }
 
@@ -149,18 +148,20 @@ export default function ValveOptions({
         setIsSuccess(false)
         setResponseMessage('Error')
     }
-    console.log("message: " + responseMessage)
-    console.log("error code: " + responseNumber)
   }
 
   useEffect(() => {
     if (mqttClient) {
       mqttClient.on("message", (topic, messages) => {
         if (topic == REPLYTOPIC) {
-          setResponse(messages.toString())
           try {
-            let res1 = response.substring(2, 4)
-            let res2 = response.substring(1, 2)
+            setResponse(messages.toString())
+
+            let msg = messages.toString()
+            console.log(msg);
+
+            let res1 = msg.substring(2, 4)
+            let res2 = msg.substring(0, 2)
             checkErrorCodeLastTwoDigit(res1)
             checkErrorCodeFirstTwoDigit(res2)
           } catch (err) {
