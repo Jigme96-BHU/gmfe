@@ -102,10 +102,10 @@ export default function Header({ children }) {
             }}
           >
             <Row justify="space-evenly">
-              <Col>
+              {/* <Col>
                 <br />
                 <Image src={logo} height={70} width={100} alt="DHI Logo" />
-              </Col>
+              </Col> */}
               <Col>
                 <br />
                 <p style={{ color: "white" }}>

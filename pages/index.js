@@ -5,7 +5,7 @@ import { useAppContent } from "../context/content";
 export default function HomePage() {
   const { setTitle} = useAppContent();
   useEffect(() => {
-    setTitle("DHI Water Management System");
+    setTitle("Gyelpozhing Water Management System");
   },[]);
   return <HomeDash />;
 }

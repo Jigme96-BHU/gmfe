@@ -6,6 +6,7 @@ import Tank from "./Tank";
 import ValveStatus from "./ValveStatus";
 import WaterQuality from "./WaterQuality";
 import { useState, useEffect } from "react";
+import decimal from "decimal.js"
 
 // const Topic = process.env.NEXT_PUBLIC_MQTT_TOPIC;
 
@@ -50,7 +51,11 @@ export default function HomeDash() {
       if( tankname == 'Royal_Level'){
 
         try {
-          data[i].level = Number(4.120 - data[i].level)
+          console.log(data[i].level);
+          const reading = new decimal(data[i].level)
+          const newdata = new decimal('4.120').sub(reading)
+          data[i].level = Number(newdata)
+
         } catch (error) {
           console.log(error);
           
@@ -58,6 +63,7 @@ export default function HomeDash() {
       }else{
 
         try {
+          console.log(data[i].level);
           data[i].level = Number(4.370 - data[i].level)
         } catch (error) {
           console.log(error);
