@@ -113,33 +113,33 @@ export default function HomeDash() {
   }, [mqttClient]);
   return (
     <div>
-      <Row gutter={[8, 8]}>
+      <Row gutter={[10, 10]}>
         <Col span={8}>
-          <Card style={{ borderRadius: 15, height: 260 }}>
+          <Card style={{ borderRadius: 15, height: 300 }}>
             <p className="title">Tank Water Level(Meters)</p>
             <Tank data={TankData} />
           </Card>
         </Col>
         <Col span={16}>
-          <Card style={{ borderRadius: 15, height: 260, overflow: "auto" }}>
+          <Card style={{ borderRadius: 15, height: 300, overflow: "auto" }}>
             <p className="title">Flow Rate Display(m<sup>3</sup>/hour)</p>
             <FlowRate data={FlowRateData} />
           </Card>
         </Col>
         <Col span={13}>
-          <Card style={{ borderRadius: 15, height: 250, overflow: "auto" }}>
+          <Card style={{ borderRadius: 15, height: 345, overflow: "auto" }}>
             <p className="title">Valve Position</p>
             <ValveStatus data={ValveStatusData} />
           </Card>
         </Col>
         <Col span={5}>
-          <Card style={{ borderRadius: 15, height: 250 }}>
+          <Card style={{ borderRadius: 15, height: 345 }}>
             <p className="title">Water Quality</p>
             <WaterQuality data={qualityStatusData} />
           </Card>
         </Col>
         <Col span={6}>
-          <Card style={{ borderRadius: 15, height: 250 }}>
+          <Card style={{ borderRadius: 15, height: 345 }}>
             <p className="title">Alarms and Events</p>
             <AlarmsEvents />
           </Card>

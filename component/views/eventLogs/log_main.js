@@ -4,12 +4,13 @@ import React from "react";
 import { useAppContent } from "../../../context/content";
 import { getRenderPropValue } from "antd/lib/_util/getRenderPropValue";
 const server = process.env.NEXT_PUBLIC_SERVER
-import { Line, Bar } from '@ant-design/plots'
+import { Line, Bar, Column } from '@ant-design/plots'
 
 import { getDailyData, getDailyDataLevel, getDailyDataQuality } from './log'
 import { getMonthlyData, getMonthlyDataLevel, getMonthlyDataQuality } from "./log";
 import { getWeeklyData, getWeeklyDataLevel, getWeeklyDataQuality } from "./log";
 const { Option } = Select;
+
 
 const sensorData = ['FlowMeter', 'LevelSensor', 'QualitySensor'];
 const eachSensorData = {
@@ -55,18 +56,24 @@ const chartDemo = () => {
     setSecondSensor(value);
   };
 
+
   const config = {
     data,
     width: 1000,
     height: 600,
     autoFit: true,
     xField: 'createdAt',
-    // xAxis: {
-    //   label:{
-    //     formatter:({data[0]})=> 777
-    //   }
-    // },
+    xAxis: {
+      label:false
+    },
+    
+
     yField: yField,
+
+    slider: {
+      start: .0,
+      end : .1
+    },
 
   }
 
@@ -83,12 +90,14 @@ const chartDemo = () => {
           let filterdata = response.filter((val) => {
             return val.flow_name === secondSensor;
           });
-          console.log(filterdata);
+          console.log("Filter DAt",filterdata);
           setData(filterdata);
 
         } else if (period === "month") {
           let response = await getMonthlyData({ date });
           let filterdata = response.filter((val) => {
+
+            
             return val.flow_name === secondSensor;
           });
           setData(filterdata);
@@ -152,6 +161,10 @@ const chartDemo = () => {
 
   }
 
+
+
+
+
   return (
     <>
       <Card
@@ -181,7 +194,7 @@ const chartDemo = () => {
 
         <PickWithType onChange={getDate} ></PickWithType>
         <Button type="primary" onClick={senddata}>Fetch</Button>
-        <Line {...config}></Line>
+        <Column {...config}></Column>
       </Card>
 
     </>

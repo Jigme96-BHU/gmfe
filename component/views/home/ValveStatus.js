@@ -1,4 +1,4 @@
-import { Col, Row } from "antd";
+import { Col, Row, Card } from "antd";
 
 
 export default function ValveStatus({ data }) {
@@ -7,19 +7,32 @@ export default function ValveStatus({ data }) {
       <Row justify="start">
         {data.map((val, i) => {
           return (
-            <Col key={i} span={8}>
-              <Row justify="start">
-                <Col span={12}>
-                  <p className="sub_title">{val.flow_name}</p>
+            <Col key={i} span={6}>
+                
+                <Card 
+                hoverable
+                style={{
+                  backgroundColor:  "#10b4eb",
+          
+                  width: 130,
+          
+                  borderRadius:15,
+                  margin:3
+                }}
+                >
+
+                
+                <Col justify="center">
+                  <p className="sub_title" style={{ fontWeight: "bold", color:"white" }}>{val.flow_name}</p>
                 </Col>
-                <Col span={12}>
-                  <Row justify="space-between">
-                    <Col span={12}>
-                      <p style={{ fontWeight: "bold", padding: 6 }}>{val.valve_position}</p>
+                <Col >
+                  <Row justify="center">
+                    <Col >
+                      <p style={{ fontWeight: "bold", color:"white" }}>{val.valve_position}</p>
                     </Col>
                   </Row>
                 </Col>
-              </Row>
+              </Card>
             </Col>
           );
         })}
