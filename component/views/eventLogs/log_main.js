@@ -1,3 +1,4 @@
+import Papa from 'papaparse';
 import { Card, Table, DatePicker, Select, Button, message } from "antd";
 import { useEffect, useState } from "react";
 import React from "react";
@@ -61,13 +62,7 @@ const chartDemo = () => {
     height: 600,
     autoFit: true,
     xField: 'createdAt',
-    // xAxis: {
-    //   label:{
-    //     formatter:({data[0]})=> 777
-    //   }
-    // },
     yField: yField,
-
   }
 
   async function getDate(data, dataSting) {
@@ -76,81 +71,60 @@ const chartDemo = () => {
 
   async function senddata() {
     try {
+      let response;
+      let filterdata;
 
       if (sensorType === 'FlowMeter') {
         if (period === "anyday") {
-          let response = await getDailyData({ date });
-          let filterdata = response.filter((val) => {
-            return val.flow_name === secondSensor;
-          });
-          console.log(filterdata);
-          setData(filterdata);
-
+          response = await getDailyData({ date });
+          filterdata = response.filter((val) => val.flow_name === secondSensor);
         } else if (period === "month") {
-          let response = await getMonthlyData({ date });
-          let filterdata = response.filter((val) => {
-            return val.flow_name === secondSensor;
-          });
-          setData(filterdata);
+          response = await getMonthlyData({ date });
+          filterdata = response.filter((val) => val.flow_name === secondSensor);
         } else if (period === "weekly") {
-          let response = await getWeeklyData({ date });
-          let filterdata = response.filter((val) => {
-            return val.flow_name === secondSensor;
-          })
-          setData(filterdata);
+          response = await getWeeklyData({ date });
+          filterdata = response.filter((val) => val.flow_name === secondSensor);
         }
-
-
       } else if (sensorType === 'LevelSensor') {
         if (period === "anyday") {
-          let response = await getDailyDataLevel({ date });
-          let filterdata = response.filter((val) => {
-            return val.level_name === secondSensor;
-          })
-          setData(filterdata);
+          response = await getDailyDataLevel({ date });
+          filterdata = response.filter((val) => val.level_name === secondSensor);
         } else if (period === "month") {
-          let response = await getMonthlyDataLevel({ date });
-          let filterdata = response.filter((val) => {
-            return val.level_name === secondSensor;
-          })
-          setData(filterdata);
-
+          response = await getMonthlyDataLevel({ date });
+          filterdata = response.filter((val) => val.level_name === secondSensor);
         } else if (period === "weekly") {
-          let response = await getWeeklyDataLevel({ date });
-          let filterdata = response.filter((val) => {
-            return val.level_name === secondSensor;
-          })
-          setData(filterdata);
+          response = await getWeeklyDataLevel({ date });
+          filterdata = response.filter((val) => val.level_name === secondSensor);
         }
-      } else if (sensorType == 'QualitySensor') {
+      } else if (sensorType === 'QualitySensor') {
         if (period === 'anyday') {
-          let response = await getDailyDataQuality({ date });
-          let filterdata = response.filter((val) => {
-            return val.value_name === secondSensor;
-          })
-          setData(filterdata);
+          response = await getDailyDataQuality({ date });
+          filterdata = response.filter((val) => val.value_name === secondSensor);
+        } else if (period === "month") {
+          response = await getMonthlyDataQuality({ date });
+          filterdata = response.filter((val) => val.value_name === secondSensor);
+        } else if (period === "weekly") {
+          response = await getWeeklyDataQuality({ date });
+          filterdata = response.filter((val) => val.value_name === secondSensor);
         }
-      } else if (period === "month") {
-        let response = await getMonthlyDataQuality({ date });
-        let filterdata = response.filter((val) => {
-          return val.level_name === secondSensor;
-        })
-        setData(filterdata);
-
-      } else if (period === "weekly") {
-        let response = await getWeeklyDataQuality({ date });
-        let filterdata = response.filter((val) => {
-          return val.level_name === secondSensor;
-        })
-        setData(filterdata);
       }
 
-
+      setData(filterdata);
     } catch (err) {
       console.log(err)
     }
-
   }
+
+  const downloadData = () => {
+    const csvData = Papa.unparse(data); // Assuming you have PapaParse library imported
+    const blob = new Blob([csvData], { type: 'text/csv' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'sensor_data.csv';
+    a.click();
+    URL.revokeObjectURL(url);
+  };
 
   return (
     <>
@@ -163,43 +137,30 @@ const chartDemo = () => {
       >
         <h1>Select Date</h1>
 
-        <Select value={period} style={{ width: 120, }} onChange={setPeriod}>
+        <Select value={period} style={{ width: 120 }} onChange={setPeriod}>
           <Option value="anyday">Any Date</Option>
           <Option value="weekly">Weekly</Option>
           <Option value="month">Month</Option>
         </Select>
-        <Select defaultValue={sensorData[0]} style={{ width: 140, }} onChange={handleSensorChange}>
+        <Select defaultValue={sensorData[0]} style={{ width: 140 }} onChange={handleSensorChange}>
           {sensorData.map((sensor) => (
             <Option key={sensor}>{sensor}</Option>
           ))}
         </Select>
-        <Select value={secondSensor} style={{ width: 140, }} onChange={OnSecondSensorChange}>
+        <Select value={secondSensor} style={{ width: 140 }} onChange={OnSecondSensorChange}>
           {sensor.map((sensor) => (
             <Option key={sensor}>{sensor}</Option>
           ))}
         </Select>
 
-        <PickWithType onChange={getDate} ></PickWithType>
+        <PickWithType onChange={getDate} />
         <Button type="primary" onClick={senddata}>Fetch</Button>
-        <Line {...config}></Line>
+        <Button onClick={downloadData}>Download Data</Button>
+        <Line {...config} />
       </Card>
-
     </>
-
   );
-
-
 }
 
 export default chartDemo;
-
-
-
-
-
-
-
-
-
-
 

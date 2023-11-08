@@ -10,10 +10,10 @@ export default function WaterQuality({ data }) {
             <Col span={24} key={i}>
               <Row justify="space-evenly">
                 <Col style={{ width: 50 }}>
-                  <p className="sub_title">{val.Quality_name}</p>
+                  <p className="sub_title" style={{ fontSize: '15px' }}>{val.Quality_name}</p>
                 </Col>
                 <Col style={{ width: 50 }}>
-                  <p style={{ color: "black" }} className="sub_title">{i === 1 ? val.value / 100 : val.value}</p>
+                  <p style={{ color: "black", fontSize: '15px' , paddingLeft: '8px'}} className="sub_title">{ val.value === ''? 0.00 : val.value}</p>
                 </Col>
               </Row>
             </Col>

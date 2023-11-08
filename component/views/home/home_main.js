@@ -54,7 +54,7 @@ export default function HomeDash() {
           console.log(data[i].level);
           const reading = new decimal(data[i].level)
           const newdata = new decimal('4.120').sub(reading)
-          data[i].level = Number(newdata)
+          data[i].level = Number(Math.PI*Math.pow(4.5,2)*newdata).toFixed(3)
 
         } catch (error) {
           console.log(error);
@@ -64,7 +64,7 @@ export default function HomeDash() {
 
         try {
           console.log(data[i].level);
-          data[i].level = Number(4.370 - data[i].level)
+          data[i].level = Number(26*15*(4.370 - data[i].level)).toFixed(3)
         } catch (error) {
           console.log(error);
         }
@@ -116,7 +116,7 @@ export default function HomeDash() {
       <Row gutter={[8, 8]}>
         <Col span={8}>
           <Card style={{ borderRadius: 15, height: 260 }}>
-            <p className="title">Tank Water Level(Meters)</p>
+            <p className="title">Tank Water Level(m<sup>3</sup>)</p>
             <Tank data={TankData} />
           </Card>
         </Col>
