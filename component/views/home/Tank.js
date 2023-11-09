@@ -3,7 +3,7 @@ import { Column } from "@ant-design/plots";
 import { Col, Row } from "antd";
 export default function Tank({ data }) {
   const config = {
-    data,
+    data: data.map(item => ({...item, level: parseFloat(item.level)})),
     xField: "level_name",
     yField: "level",
     xAxis: {
@@ -13,10 +13,13 @@ export default function Tank({ data }) {
       },
     },
   };
+  
   return (
-    <Row gutter={[0, 8]}>
+    <Row gutter={[0, 8]} align="middle">
       <Col span={24}>
-        <Row justify="space-around">
+        <Row justify="space-around"  style={{
+                marginLeft: 30,
+              }}>
           {data.map((val, i) => {
             return (
               <Col key={i}>
@@ -24,7 +27,7 @@ export default function Tank({ data }) {
                   style={{
                     padding: 2,
                     height: 35,
-                    width: 70,
+                    width: 100,
                     borderRadius: 20,
                     border: "4px solid red",
                     textAlign: "center",
